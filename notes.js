@@ -1,3 +1,5 @@
+// Note: find returns only one element but filter returns a sequence
+
 const fs = require('fs');
 const chalk = require('chalk');
 
@@ -7,10 +9,10 @@ const getNotes = () =>{
 
 const addNotes = (title,body) =>{
     const notes = loadNotes();
-    const duplicateNotes = notes.filter(note => note.title === title);
-    if (!duplicateNotes.length){
+    // const duplicateNotes = notes.filter(note => note.title === title); // filter method is kind off slow as it scans all the elements of the array while find stops when it finds the element.
+    const duplicateNote = notes.find((note) => note.title === title);
+    if (!duplicateNote){
         notes.push({title,body});
-        console.log(notes);
         saveNotes(notes);
         console.log(chalk.bgGreen("Note added successfully!"));
     }else{
@@ -55,13 +57,12 @@ const listNotes = () =>{
 
 const readNotes = (title) =>{
     const notes = loadNotes();
-    const required_note = notes.filter(note =>note.title === title);
-    if (!required_note.length){
+    // const required_note = notes.filter(note =>note.title === title);
+    const required_note = notes.find(note =>note.title === title);
+    if (!required_note){
         console.log(chalk.bgRed(`No Note found with the title ${title} !`));
     }else{
-        required_note.map(note =>{
-            console.log(chalk.bgGreen(note.title),chalk.bgBlue(note.body));
-        })
+        console.log(chalk.bgGreen(required_note.title),chalk.bgBlue(required_note.body));
     }
 };
 
