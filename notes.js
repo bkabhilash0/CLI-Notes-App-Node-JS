@@ -46,4 +46,23 @@ const removeNotes = (title) =>{
     }
 }
 
-module.exports = {getNotes,addNotes,removeNotes};
+const listNotes = () =>{
+    const notes = loadNotes();
+    notes.map(note =>{
+        console.log(chalk.bgGreen(note.title),chalk.bgBlue(note.body));
+    })
+}
+
+const readNotes = (title) =>{
+    const notes = loadNotes();
+    const required_note = notes.filter(note =>note.title === title);
+    if (!required_note.length){
+        console.log(chalk.bgRed(`No Note found with the title ${title} !`));
+    }else{
+        required_note.map(note =>{
+            console.log(chalk.bgGreen(note.title),chalk.bgBlue(note.body));
+        })
+    }
+};
+
+module.exports = {getNotes,addNotes,removeNotes,listNotes,readNotes};
