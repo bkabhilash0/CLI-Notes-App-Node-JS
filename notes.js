@@ -3,16 +3,14 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
-const getNotes = () =>{
-    return "Your Notes...";
-}
 
 const addNotes = (title,body) =>{
-    const notes = loadNotes();
+    let notes = loadNotes();
     // const duplicateNotes = notes.filter(note => note.title === title); // filter method is kind off slow as it scans all the elements of the array while find stops when it finds the element.
     const duplicateNote = notes.find((note) => note.title === title);
     if (!duplicateNote){
-        notes.push({title,body});
+        // notes.push({title,body});
+        notes = [...notes,{title,body}];
         saveNotes(notes);
         console.log(chalk.bgGreen("Note added successfully!"));
     }else{
@@ -66,4 +64,4 @@ const readNotes = (title) =>{
     }
 };
 
-module.exports = {getNotes,addNotes,removeNotes,listNotes,readNotes};
+module.exports = {addNotes,removeNotes,listNotes,readNotes};
